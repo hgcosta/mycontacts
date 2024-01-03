@@ -1,0 +1,52 @@
+# Dependências
+node_modules/
+
+# Arquivos de build
+build/
+dist/
+
+# Logs e arquivos temporários
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Arquivos de configuração
+.DS_Store
+.env
+.env.local
+.env.*.local
+.env.test
+.env.production
+.env.local
+
+# Arquivos de cache
+.cache/
+.pnp/
+.pnp.js
+
+# Arquivos de teste
+coverage/
+
+# Ferramentas específicas
+.vscode/
+.idea/
+
+# Outros
+*.swp
+*.swo
+*.swn
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+Thumbs.db:encryptable
+Thumbs.db:encryptable:compressed

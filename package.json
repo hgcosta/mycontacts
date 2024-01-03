@@ -1,0 +1,11 @@
+{
+  "name": "mycontacts",
+  "version": "1.0.0",
+  "description": "API para salvar contatos",
+  "main": "src/index.js",
+  "author": "Hugo Costa",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
