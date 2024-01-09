@@ -33,6 +33,39 @@ class ContactRepository {
             resolve();
         });
     }
+    findByEmail(email) {
+        return new Promise((resolve) => {
+            resolve(contacts.find((contact) => contact.email === email));
+        });
+    }
+    create({ name, email, phone, category_id }) {
+        return new Promise((resolve) => {
+            const newContact = {
+                id: v4(),
+                name,
+                email,
+                phone,
+                category_id: v4(),
+            };
+            contacts.push(newContact);
+            resolve(newContact);
+        });
+    }
+    update(id, { name, email, phone, category_id }) {
+        return new Promise((resolve) => {
+            const updatedContact = {
+                name,
+                email,
+                phone,
+                category_id,
+            };
+            contacts = contacts.map((contaato) => {
+                contaato.id === id ? updatedContact : contaato;
+            });
+            console.log(contacts);
+            resolve(updatedContact);
+        });
+    }
 }
 
 module.exports = new ContactRepository();
