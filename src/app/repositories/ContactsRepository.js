@@ -1,27 +1,11 @@
-const { v4 } = require("uuid");
-
 const db = require("../../database");
 
-let contacts = [
-    {
-        id: v4(),
-        name: "Hugo",
-        email: "hugo@example.com",
-        phone: "123-456",
-        category_id: v4(),
-    },
-    {
-        id: v4(),
-        name: "Henrique",
-        email: "henrique@example.com",
-        phone: "819913-456",
-        category_id: v4(),
-    },
-];
-
 class ContactRepository {
-    async findAll() {
-        const rows = await db.query("SELECT * FROM contacts");
+    async findAll(orderBy = "ASC") {
+        const direction = orderBy.toUpperCase() === "DESC" ? "DESC" : "ASC";
+        const rows = await db.query(
+            `SELECT * FROM contacts ORDER BY name ${direction}`
+        );
         return rows;
     }
     async findById(id) {
@@ -30,11 +14,11 @@ class ContactRepository {
         ]);
         return row;
     }
-    delete(id) {
-        return new Promise((resolve) => {
-            contacts = contacts.filter((contact) => contact.id != id);
-            resolve();
-        });
+    async delete(id) {
+        const deleteOp = await db.query(`DELETE FROM contacts WHERE id = $1`, [
+            id,
+        ]);
+        return deleteOp;
     }
     async findByEmail(email) {
         const [row] = await db.query(
@@ -55,20 +39,18 @@ class ContactRepository {
         console.log("Usuário Cadastrado com sucesso");
         return row;
     }
-    update(id, { name, email, phone, category_id }) {
-        return new Promise((resolve) => {
-            const updatedContact = {
-                name,
-                email,
-                phone,
-                category_id,
-            };
-            contacts = contacts.map((contaato) => {
-                contaato.id === id ? updatedContact : contaato;
-            });
-            console.log(contacts);
-            resolve(updatedContact);
-        });
+    async update(id, { name, email, phone, category_id }) {
+        const [row] = await db.query(
+            `
+         UPDATE contacts
+         SET name = 1$, email = $2, phone = $3, category_id = $4
+         WHERE id = $5
+         RETURNING *
+        `,
+            [(name, email, phone, category_id, id)]
+        );
+
+        return row;
     }
 }
 
